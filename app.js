@@ -58,7 +58,6 @@ passport.use(new LinkedInStrategy({
 }));
 
 app.get('/', function(req, res, next) {
-  console.log(req.session);
   res.render('index', {
     title: 'Express',
     user: req.session.passport.user
