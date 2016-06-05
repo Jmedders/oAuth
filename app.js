@@ -57,10 +57,18 @@ passport.use(new LinkedInStrategy({
   });
 }));
 
+
 app.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Express',
     user: req.session.passport.user
+  });
+});
+app.get('/logout', function(req, res, next) {
+  req.session.destroy(function(err) {
+  })
+  res.render('index', {
+    title: 'Express'
   });
 });
 
@@ -76,6 +84,10 @@ app.get('/auth/linkedin',
     failureRedirect: '/login'
   }));
 
+  app.use(function (req, res, next) {
+    res.locals.user = req.session.passport.user
+    next()
+  })
 
 app.use('/', routes);
 app.use('/users', users);
